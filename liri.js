@@ -1,12 +1,32 @@
+// linking required packages
 require("dotenv").config();
 const request = require('request');
 const keys = require('keys.js');
+//putting user input into variables
 const command = process.argv[3];
-const specifiedMedia = process.argv[4];
+const media = process.argv[4];
+//Callin in API keys
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
 console.log(spotify);
 
+switch(command) {
+    case "my-tweets":
+    tweets();
+    break;
+
+    case "spotify-this-song":
+    song();
+    break;
+
+    case "movie-this":
+    movie();
+    break;
+
+    case "do-what-it-says":
+    readAndDo();
+    break;
+}
 
 /*
 // LOOK UP VS DEBUG AND WORK ON GETTING USED TO DEBUGGING!
