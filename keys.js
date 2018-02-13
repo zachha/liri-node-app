@@ -1,4 +1,3 @@
-console.log('this is loaded');
 require("dotenv").config();
 
 exports.twitter = {
@@ -7,7 +6,6 @@ exports.twitter = {
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 };
-console.log(exports.twitter);
 
 exports.spotify = {
     id: process.env.SPOTIFY_ID,

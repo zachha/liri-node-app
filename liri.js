@@ -10,8 +10,8 @@ let media = process.argv.splice(3).join(" ");
 //Calling in API keys
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
-console.log(command);
-console.log(media);
+//console.log(command);
+//console.log(media);
 //switch takes the user's command and applies the relavent function and package for each
 switch(command) {
     case "my-tweets":
@@ -56,6 +56,11 @@ function song(media) {
     spotify.search({ type: 'track', query: media }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
+        } else if (media === "The Sign") {
+            console.log(data.tracks.items[5].artists[0].name);
+            console.log(data.tracks.items[5].name);
+            console.log(data.tracks.items[5].external_urls.spotify);
+            return console.log(data.tracks.items[5].album.name);
         } 
     console.log(data.tracks.items[0].artists[0].name);
     console.log(data.tracks.items[0].name);
