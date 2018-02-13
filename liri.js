@@ -33,19 +33,17 @@ switch(command) {
 
 
 // LOOK UP VS DEBUG AND WORK ON GETTING USED TO DEBUGGING!
-// count 20, 
 //show last 20 tweets and when they were created (twitter package)
 function tweets() {
-    /*
+    
     var params = { screen_name: 'irl_andy_irl' };
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
-            console.log(tweets);
+            for (i = 0; i < 20; i++) {
+                console.log(tweets[i].created_at);
+                console.log(tweets[i].text);
+            }
         }
-    });
-    */
-    client.get('search/tweets', { q: 'irl_andy_irl', count: 20 }, function (error, tweets, response) {
-        console.log(tweets.statuses);
     });
 }
 /*
