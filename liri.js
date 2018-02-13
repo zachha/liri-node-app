@@ -6,7 +6,7 @@ const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 //putting user input into variables
 const command = process.argv[2];
-const media = process.argv.splice(3);
+let media = process.argv.splice(3).join(" ");
 //Calling in API keys
 var spotify = new Spotify(keys.spotify);
 var client = new Twitter(keys.twitter);
@@ -19,7 +19,7 @@ switch(command) {
     break;
 
     case "spotify-this-song":
-    song();
+    song(media);
     break;
 
     case "movie-this":
@@ -46,19 +46,24 @@ function tweets() {
         }
     });
 }
-/*
+
 //show song info: artist(s), song name, spotify preview link, album song is from
 // if no song provided, default to Ace of Bass' 'The Sign' (Spotify package)
 function song(media) {
+    if (media === "") {
+        media = "The Sign"
+    }
     spotify.search({ type: 'track', query: media }, function(err, data) {
         if (err) {
             return console.log('Error occurred: ' + err);
-        }
-
-    console.log(data);
+        } 
+    console.log(data.tracks.items[0].artists[0].name);
+    console.log(data.tracks.items[0].name);
+    console.log(data.tracks.items[0].external_urls.spotify);
+    console.log(data.tracks.items[0].album.name);
     });
 }
-
+/*
 //show movie info: movie title, year, IMDB rating, Rotten Tomatoes rating, Country of movie, Movie language, Plot Summary, Actors in movie
 //if no input, defaults to 'Mr. Nobody' (OMDB package)
 function movie() {
