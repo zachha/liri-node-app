@@ -4,6 +4,7 @@ const keys = require('./keys.js');
 const request = require('request');
 const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
+const fs = require('fs');
 //putting user input into variables
 const command = process.argv[2];
 let media = process.argv.splice(3).join(" ");
@@ -32,8 +33,6 @@ switch(command) {
     readAndDo();
     break;
 }
-
-
 // LOOK UP VS DEBUG AND WORK ON GETTING USED TO DEBUGGING!
 
 //show last 20 tweets and when they were created (twitter package)
@@ -43,8 +42,8 @@ function tweets() {
     client.get('statuses/user_timeline', params, function (error, tweets, response) {
         if (!error) {
             for (i = 0; i < 20; i++) {
-                console.log(tweets[i].created_at);
-                console.log(tweets[i].text);
+                console.log("\n", +tweets[i].created_at);
+                console.log("\n", +tweets[i].text);
             }
         }
     });
@@ -58,14 +57,14 @@ function song(media) {
     }
     spotify.search({ type: 'track', query: media }, function(err, data) {
         if (err) {
-            return console.log('Error occurred: ' + err);
+            return console.log("\n", +'Error occurred: ' + err);
         } else if (media === "The Sign") {
-            console.log(data.tracks.items[5].artists[0].name);
-            console.log(data.tracks.items[5].name);
-            console.log(data.tracks.items[5].external_urls.spotify);
-            return console.log(data.tracks.items[5].album.name);
+            console.log("\n", +data.tracks.items[5].artists[0].name);
+            console.log("\n", +data.tracks.items[5].name);
+            console.log("\n", +data.tracks.items[5].external_urls.spotify);
+            return console.log("\n", +data.tracks.items[5].album.name);
         } 
-    console.log("\n", + data.tracks.items[0].artists[0].name);
+    console.log("\n", +data.tracks.items[0].artists[0].name);
     console.log("\n", +data.tracks.items[0].name);
     console.log("\n", +data.tracks.items[0].external_urls.spotify);
     console.log("\n", +data.tracks.items[0].album.name);
@@ -82,7 +81,6 @@ function movie(media) {
     request(queryUrl, function (error, response, body) {
         // If the request is successful
         if (!error && response.statusCode === 200) {
-            JSON.parse(body);
             console.log("\n", 'Title: ' + JSON.parse(body).Title);
             console.log("\n", 'Release Year: ' + JSON.parse(body).Year);
             console.log("\n", 'IMDB Rating: ' + JSON.parse(body).imdbRating);
@@ -95,9 +93,14 @@ function movie(media) {
     });
 
 }
-/*
+
 // using fs Node package, takes text inside random.txt and then use it to call one of LIRI's commands (should run spotify-this-song for "I Want It That Way" as follows the text in random.txt, can also make changes to text to test feature for other commands)
 function readAndDo () {
-
+    fs.readFile("random.txt", "utf-8", function(err, data) {
+        if (err) {
+            return console.log(err);
+        }
+        console.log(data);  
+    })
 }
-*/
+
