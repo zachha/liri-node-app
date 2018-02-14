@@ -65,31 +65,28 @@ function song(media) {
             console.log(data.tracks.items[5].external_urls.spotify);
             return console.log(data.tracks.items[5].album.name);
         } 
-    console.log(data.tracks.items[0].artists[0].name);
-    console.log(data.tracks.items[0].name);
-    console.log(data.tracks.items[0].external_urls.spotify);
-    console.log(data.tracks.items[0].album.name);
+    console.log("\n", + data.tracks.items[0].artists[0].name);
+    console.log("\n", +data.tracks.items[0].name);
+    console.log("\n", +data.tracks.items[0].external_urls.spotify);
+    console.log("\n", +data.tracks.items[0].album.name);
     });
 }
 
 //show movie info: movie title, year, IMDB rating, Rotten Tomatoes rating, Country of movie, Movie language, Plot Summary, Actors in movie
 //if no input, defaults to 'Mr. Nobody' (OMDB package)
 function movie(media) {
+    if(media === "") {
+        media = "Mr. Nobody";
+    }
     const queryUrl = 'http://www.omdbapi.com/?t=' + media + '&y=&plot=short&apikey=trilogy';
-    console.log(queryUrl);
-
     request(queryUrl, function (error, response, body) {
-
         // If the request is successful
         if (!error && response.statusCode === 200) {
-
-            // Parse the body of the site and recover just the imdbRating
-            // (Note: The syntax below for parsing isn't obvious. Just spend a few moments dissecting it).
             JSON.parse(body);
             console.log("\n", 'Title: ' + JSON.parse(body).Title);
             console.log("\n", 'Release Year: ' + JSON.parse(body).Year);
             console.log("\n", 'IMDB Rating: ' + JSON.parse(body).imdbRating);
-            console.log("\n", 'Rotten Tomatoes Rating: ' + JSON.parse(body).Ratings[2]);
+            console.log("\n", 'Rotten Tomatoes Rating: ' + JSON.parse(body).Ratings[1].Value);
             console.log("\n", 'Country of Origin: ' + JSON.parse(body).Country);
             console.log("\n", 'Language: ' + JSON.parse(body).Language);
             console.log("\n", 'Plot: ' + JSON.parse(body).Plot);
