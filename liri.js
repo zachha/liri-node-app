@@ -6,7 +6,7 @@ const Twitter = require('twitter');
 const Spotify = require('node-spotify-api');
 const fs = require('fs');
 //putting user input into variables
-var command = process.argv[2];
+const command = process.argv[2];
 var media = process.argv.splice(3).join(" ");
 //Calling in API keys
 var spotify = new Spotify(keys.spotify);
@@ -56,6 +56,7 @@ function song(media) {
     if (media === "") {
         media = "The Sign"
     }
+    console.log("\n", "You searched for the song: " + media);
     spotify.search({ type: 'track', query: media }, function(err, data) {
         if (err) {
             return console.log("\n", +'Error occurred: ' + err);
@@ -79,6 +80,7 @@ function movie(media) {
         media = "Mr. Nobody";
     }
     const queryUrl = 'http://www.omdbapi.com/?t=' + media + '&y=&plot=short&apikey=trilogy';
+    console.log("\n", "You searched for the movie: " + media);
     request(queryUrl, function (error, response, body) {
         // If the request is successful
         if (!error && response.statusCode === 200) {
@@ -102,12 +104,11 @@ function readAndDo() {
             return console.log(err);
         }
         let parts = data.split(",", 2);
-        command = parts[0].trim();
+        let newCommand = parts[0].trim();
         media = JSON.parse(parts[1].trim());
-        console.log(command);
-        console.log(media);
+        doAction(newCommand)
     })
 }
-console.log(media);
+
 doAction(command);
 
