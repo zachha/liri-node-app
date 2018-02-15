@@ -29,10 +29,9 @@ function doAction(command) {
         },
         'do-what-it-says': function() {
             readAndDo();
-            textLog();
         },
         'default': function() {
-            return console.log("\n", "Please input a valid command");
+            return console.log("\nPlease input a valid command");
         }
     };
     return (actions[command] || actions['default'])();
@@ -60,20 +59,20 @@ function song(media) {
     if (media === "") {
         media = "The Sign"
     }
-    console.log("\n", "You searched for the song: " + media);
+    console.log("\nYou searched for the song: " + media);
     spotify.search({ type: 'track', query: media }, function(err, data) {
         if (err) {
-            return console.log("\n", +'Error occurred: ' + err);
+            return console.log("\nError occurred: " + err);
         } else if (media === "The Sign") {
-            console.log("\n", data.tracks.items[5].artists[0].name);
-            console.log("\n", data.tracks.items[5].name);
-            console.log("\n", data.tracks.items[5].external_urls.spotify);
-            return console.log("\n", data.tracks.items[5].album.name);
+            console.log("\nArtist Name: " + data.tracks.items[5].artists[0].name);
+            console.log("\nSong Name: " + data.tracks.items[5].name);
+            console.log("\nSpotify Link: " + data.tracks.items[5].external_urls.spotify);
+            return console.log("\nAlbum Name: " + data.tracks.items[5].album.name);
         } 
-    console.log("\n", data.tracks.items[0].artists[0].name);
-    console.log("\n", data.tracks.items[0].name);
-    console.log("\n", data.tracks.items[0].external_urls.spotify);
-    console.log("\n", data.tracks.items[0].album.name);
+        console.log("\nArtist Name: " + data.tracks.items[0].artists[0].name);
+        console.log("\nSong Name: " + data.tracks.items[0].name);
+        console.log("\nSpotify Link: " + data.tracks.items[0].external_urls.spotify);
+        console.log("\nAlbum Name: " + data.tracks.items[0].album.name);
     });
 };
 
@@ -84,7 +83,7 @@ function movie(media) {
         media = "Mr. Nobody";
     }
     const queryUrl = 'http://www.omdbapi.com/?t=' + media + '&y=&plot=short&apikey=trilogy';
-    console.log("\n", "You searched for the movie: " + media);
+    console.log("\nYou searched for the movie: " + media);
     request(queryUrl, function (error, response, body) {
         // If the request is successful
         if (!error && response.statusCode === 200) {
@@ -101,7 +100,7 @@ function movie(media) {
 
 }
 
-// using fs Node package, takes text inside random.txt and then use it to call one of LIRI's commands (should run spotify-this-song for "I Want It That Way" as follows the text in random.txt, can also make changes to text to test feature for other commands)
+// using fs Node package, takes text inside random.txt and then use it to call one of LIRI's commands
 function readAndDo() {
     fs.readFile("random.txt", "utf-8", function (err, data) {
         if (err) {
@@ -121,6 +120,6 @@ function textLog() {
         }
     })
 };
-
+// calls the object literal to run the user's specified command
 doAction(command);
 
