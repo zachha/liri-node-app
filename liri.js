@@ -9,23 +9,27 @@ const fs = require('fs');
 const command = process.argv[2];
 var media = process.argv.splice(3).join(" ");
 //Calling in API keys
-var spotify = new Spotify(keys.spotify);
-var client = new Twitter(keys.twitter);
+const spotify = new Spotify(keys.spotify);
+const client = new Twitter(keys.twitter);
 
 // Object Literal holding all of the functions to be called in by the user's command input
 function doAction(command) {
     var actions = {
         'my-tweets': function() {
            tweets();
+           textLog();
         },
         'spotify-this-song': function() {
             song(media);
+            textLog();
         },
         'movie-this': function() {
             movie(media);
+            textLog();
         },
         'do-what-it-says': function() {
             readAndDo();
+            textLog();
         },
         'default': function() {
             return console.log("\n", "Please input a valid command");
@@ -109,6 +113,14 @@ function readAndDo() {
         doAction(newCommand)
     })
 }
+// Keeps a log of the commands the user inputs the liri program to run in log.txt
+function textLog() {
+    fs.appendFile("log.txt", "\nUser ran the command: " + command + " " + media, function(err) {
+        if(err) {
+            return console.log(err);
+        }
+    })
+};
 
 doAction(command);
 
